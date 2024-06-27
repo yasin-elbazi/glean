@@ -22,7 +22,7 @@ if (!$session) {
 $user_id = $session['User_ID'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $creator_id = $_POST['creator'];
+    $creator_id = $_POST['creator'] ? $_POST['creator'] : null;
     $new_creator = $_POST['new_creator'];
     $type = $_POST['type'];
     $title = $_POST['title'];
@@ -67,7 +67,7 @@ $sql = "SELECT c.ID_Contenu, c.Titre_Contenu, c.Description_contenu, c.URL, c.Im
                c.Etat_d_achevement, c.Date_modification, c.Score_personnel, c.Score_critique, 
                c.Date_publication, c.Date_visionnage, c.Favori, cr.Nom_Createur 
         FROM Contenu c 
-        JOIN Createur cr ON c.ID_Createur = cr.ID_Createur
+        LEFT JOIN Createur cr ON c.ID_Createur = cr.ID_Createur
         WHERE c.ID_Utilisateur = :user_id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
@@ -129,7 +129,8 @@ $contents = $stmt->fetchAll();
                     <label class="label" for="creator">Créateur de Contenu:</label>
                     <div class="control">
                         <div class="select">
-                            <select id="creator" name="creator" required>
+                            <select id="creator" name="creator">
+                                <option value="">Aucun</option>
                                 <?php
                                 $sql = "SELECT ID_Createur, Nom_Createur FROM Createur";
                                 $stmt = $pdo->query($sql);
@@ -221,12 +222,12 @@ $contents = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($contents as $content): ?>
                     <tr>
-                        <td><img src="<?php echo htmlspecialchars($content['Image_contenu']); ?>" alt="Image de contenu" width="100"></td>
+                        <td><?php echo $content['Image_contenu'] ? "<img src='".htmlspecialchars($content['Image_contenu'])."' alt='Image de contenu' width='100'>" : "N/A"; ?></td>
                         <td><?php echo htmlspecialchars($content['Titre_Contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Description_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Type_de_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Etat_d_achevement']); ?></td>
-                        <td><?php echo htmlspecialchars($content['Nom_Createur']); ?></td>
+                        <td><?php echo htmlspecialchars($content['Nom_Createur'] ? $content['Nom_Createur'] : "N/A"); ?></td>
                         <td><a href="<?php echo htmlspecialchars($content['URL']); ?>" target="_blank">Voir</a></td>
                         <td><?php echo htmlspecialchars($content['Date_modification']); ?></td>
                         <td><?php echo htmlspecialchars($content['Score_personnel']); ?></td>
@@ -246,4 +247,3 @@ $contents = $stmt->fetchAll();
     </div>
 </body>
 </html>
-
