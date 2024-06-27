@@ -222,12 +222,12 @@ $contents = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($contents as $content): ?>
                     <tr>
-                        <td><img src="<?php echo htmlspecialchars($content['Image_contenu']); ?>" alt="Image de contenu" width="100"></td>
+                        <td><?php echo $content['Image_contenu'] ? "<img src='".htmlspecialchars($content['Image_contenu'])."' alt='Image de contenu' width='100'>" : "N/A"; ?></td>
                         <td><?php echo htmlspecialchars($content['Titre_Contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Description_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Type_de_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Etat_d_achevement']); ?></td>
-                        <td><?php echo htmlspecialchars($content['Nom_Createur']); ?></td>
+                        <td><?php echo htmlspecialchars($content['Nom_Createur']) ?: 'N/A'; ?></td>
                         <td><a href="<?php echo htmlspecialchars($content['URL']); ?>" target="_blank">Voir</a></td>
                         <td><?php echo htmlspecialchars($content['Date_modification']); ?></td>
                         <td><?php echo htmlspecialchars($content['Score_personnel']); ?></td>
