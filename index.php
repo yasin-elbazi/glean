@@ -41,7 +41,7 @@
             color: #050505; /* Couleur noire pour le texte */
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Inter', serif; /* Utiliser la police Inter pour les titres */
+            font-family: 'Inter', serif; /* On utilise la police Inter pour les titres */
             color: #050505; /* Couleur noire pour les titres */
         }
         .section {
