@@ -1,6 +1,7 @@
 # Glean
 
-Bienvenue sur **Glean** ! Ce projet est le fruit de ma passion pour l'organisation et la gestion de contenus. Glean est une plateforme qui permet de collecter, organiser et partager des contenus variés tels que des livres, des articles, des vidéos, des podcasts, et bien plus encore. Le but est de créer un espace personnel où l'on peut rassembler toutes nos ressources préférées et y ajouter des notes pour mieux les exploiter.
+Bienvenue sur **Glean** ! Ce projet est le fruit d'une activité qui suscite souvent en moi l'obessession et une curiosité insatiable, c'est celle qui consiste à collecter, organiser, gérer et synthétiser d'énormes quantités variés de contenus (de différentes cultures, formats,..). Cette démarche permet entre autre de rassembler plusieurs réflexions avec une vision hollistique des sujets, des contenus, et des critiques sur ces mêmes contenus, et d'en faire une synthèse pour remettre à la lumière de notre contexte des vérités qui perdent en pertinence sans être revue.
+Glean est une plateforme qui permet de collecter, organiser et partager des contenus variés tels que des livres, des articles, des vidéos, des podcasts, et bien plus encore. Le but est de créer un espace personnel où l'on peut rassembler toutes nos ressources préférées et y ajouter des notes pour mieux les exploiter.
 
 ## Fonctionnalités
 
