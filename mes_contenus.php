@@ -22,7 +22,7 @@ if (!$session) {
 $user_id = $session['User_ID'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $creator_id = $_POST['creator'] ? $_POST['creator'] : null;
+    $creator_id = $_POST['creator'];
     $new_creator = $_POST['new_creator'];
     $type = $_POST['type'];
     $title = $_POST['title'];
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $pdo->prepare($sql);
     try {
         $stmt->execute([
-            'creator_id' => $creator_id,
+            'creator_id' => !empty($creator_id) ? $creator_id : NULL,
             'user_id' => $user_id,
             'type' => $type,
             'title' => $title,
@@ -176,7 +176,7 @@ $contents = $stmt->fetchAll();
                 <div class="field">
                     <label class="label" for="description">Description:</label>
                     <div class="control">
-                        <textarea class="textarea" id="description" name="description" required></textarea>
+                        <textarea class="textarea" id="description" name="description"></textarea>
                     </div>
                 </div>
                 <div class="field">
@@ -222,12 +222,12 @@ $contents = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($contents as $content): ?>
                     <tr>
-                        <td><?php echo $content['Image_contenu'] ? "<img src='".htmlspecialchars($content['Image_contenu'])."' alt='Image de contenu' width='100'>" : "N/A"; ?></td>
+                        <td><img src="<?php echo htmlspecialchars($content['Image_contenu']); ?>" alt="Image de contenu" width="100"></td>
                         <td><?php echo htmlspecialchars($content['Titre_Contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Description_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Type_de_contenu']); ?></td>
                         <td><?php echo htmlspecialchars($content['Etat_d_achevement']); ?></td>
-                        <td><?php echo htmlspecialchars($content['Nom_Createur'] ? $content['Nom_Createur'] : "N/A"); ?></td>
+                        <td><?php echo htmlspecialchars($content['Nom_Createur']); ?></td>
                         <td><a href="<?php echo htmlspecialchars($content['URL']); ?>" target="_blank">Voir</a></td>
                         <td><?php echo htmlspecialchars($content['Date_modification']); ?></td>
                         <td><?php echo htmlspecialchars($content['Score_personnel']); ?></td>
