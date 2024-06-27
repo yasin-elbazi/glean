@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'VotrePoliceAdobe';
+    src: url('../fonts/VotrePoliceAdobe-Regular.woff2') format('woff2'),
+         url('../fonts/VotrePoliceAdobe-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VotrePoliceAdobe';
+    src: url('../fonts/VotrePoliceAdobe-Bold.woff2') format('woff2'),
+         url('../fonts/VotrePoliceAdobe-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    background-color: #ffffff; /* Fond blanc pour toute la page */
+    font-family: 'Inter', sans-serif; /* Utiliser la police Inter pour tout le texte */
+}
+
+.hero-body {
+    background-image: url('../images/hero-background.jpg'); /* Ajoutez une image de fond */
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.section {
+    background-color: #ffffff; /* Fond blanc pour toutes les sections */
+}
+
+.section-features {
+    padding: 3rem 0;
+}
+
+.footer {
+    background-color: #ffffff; /* Fond blanc pour le footer */
+    padding: 1rem 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', serif; /* Remplacer par le nom de votre police Adobe pour les titres */
+}
+
+.navbar-item img {
+    max-height: 3rem; /* Ajustez la taille selon vos besoins */
+}
+
+.button.is-black {
+    background-color: #000;
+    color: #fff;
+}
+
+.navbar-end .navbar-item a {
+    color: #050505; /* Couleur noire pour le texte */
+}
+
+.navbar-menu {
+    margin-top: 0.5rem; /* Ajouter une marge pour espacer le bouton du haut de la page */
+}
