@@ -2,7 +2,7 @@
 include 'connexion.php';
 include 'navbar.php';  // On inclut la barre de navigation
 
-// Vérifier si l'utilisateur est connecté
+// Vérifie si l'utilisateur est connecté
 if (!isset($_COOKIE['session_token'])) {
     header('Location: login.php');
     exit();
@@ -21,13 +21,13 @@ if (!$session) {
 
 $user_id = $session['User_ID'];
 
-// Récupérer les contenus de l'utilisateur
+// Récupère les contenus de l'utilisateur
 $sql = "SELECT * FROM Contenu WHERE ID_Utilisateur = :user_id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
 $contenus = $stmt->fetchAll();
 
-// Récupérer les créateurs de l'utilisateur
+// Récupère les créateurs de l'utilisateur
 $sql = "SELECT cr.* FROM Createur cr
         JOIN UtilisateurCreateur uc ON cr.ID_Createur = uc.ID_Createur
         WHERE uc.ID_Utilisateur = :user_id";
@@ -35,7 +35,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
 $createurs = $stmt->fetchAll();
 
-// Récupérer les biographies
+// Récupère les biographies
 $sql = "SELECT * FROM Createur WHERE Biographie = 1 AND ID_Createur IN (SELECT ID_Createur FROM UtilisateurCreateur WHERE ID_Utilisateur = :user_id)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['user_id' => $user_id]);
@@ -48,7 +48,7 @@ $biographies = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Glean</title>
-    <!-- Bulma CSS -->
+    <!-- On inclut Bulma CSS pour la mise en forme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
         body {
@@ -94,150 +94,150 @@ $biographies = $stmt->fetchAll();
     <div class="content">
         <h1 class="title">Dashboard</h1>
 
-            <!-- Tabs -->
-            <div class="tabs is-boxed">
-                <ul>
-                    <li class="is-active"><a>Livres</a></li>
-                    <li><a>Citations</a></li>
-                    <li><a>Articles</a></li>
-                    <li><a>Vidéos</a></li>
-                    <li><a>Podcasts</a></li>
-                    <li><a>Films & Séries</a></li>
-                    <li><a>Documentaires</a></li>
-                    <li><a>Biographies</a></li>
-                    <li><a>Personnalités Influentes</a></li>
-                </ul>
-            </div>
+        <!-- Onglets -->
+        <div class="tabs is-boxed">
+            <ul>
+                <li class="is-active"><a>Livres</a></li>
+                <li><a>Citations</a></li>
+                <li><a>Articles</a></li>
+                <li><a>Vidéos</a></li>
+                <li><a>Podcasts</a></li>
+                <li><a>Films & Séries</a></li>
+                <li><a>Documentaires</a></li>
+                <li><a>Biographies</a></li>
+                <li><a>Personnalités Influentes</a></li>
+            </ul>
+        </div>
 
-            <!-- Tab Contents -->
-            <div class="tab-content">
-                <div class="columns is-multiline">
-                    <?php foreach ($contenus as $contenu): ?>
-                        <?php if ($contenu['Type_de_contenu'] == 'livre'): ?>
-                            <div class="column is-one-quarter">
-                                <div class="box">
-                                    <article class="media">
-                                        <div class="media-left">
-                                            <?php if ($contenu['Image_contenu']): ?>
-                                                <figure class="image is-64x64">
-                                                    <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
-                                                </figure>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>
-                                                    <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
-                                                        <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
-                                                    </a>
-                                                    <br>
-                                                    <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class="tab-content is-hidden">
-                <div class="columns is-multiline">
-                    <?php foreach ($contenus as $contenu): ?>
-                        <?php if ($contenu['Type_de_contenu'] == 'citation'): ?>
-                            <div class="column is-one-quarter">
-                                <div class="box">
-                                    <article class="media">
-                                        <div class="media-left">
-                                            <?php if ($contenu['Image_contenu']): ?>
-                                                <figure class="image is-64x64">
-                                                    <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
-                                                </figure>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>
-                                                    <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
-                                                        <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
-                                                    </a>
-                                                    <br>
-                                                    <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class="tab-content is-hidden">
-                <div class="columns is-multiline">
-                    <?php foreach ($contenus as $contenu): ?>
-                        <?php if ($contenu['Type_de_contenu'] == 'article'): ?>
-                            <div class="column is-one-quarter">
-                                <div class="box">
-                                    <article class="media">
-                                        <div class="media-left">
-                                            <?php if ($contenu['Image_contenu']): ?>
-                                                <figure class="image is-64x64">
-                                                    <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
-                                                </figure>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="media-content">
-                                            <div class="content">
-                                                <p>
-                                                    <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
-                                                        <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
-                                                    </a>
-                                                    <br>
-                                                    <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <div class="tab-content is-hidden">
-                <div class="columns is-multiline">
-                    <?php foreach ($contenus as $contenu): ?>
-                        <?php if ($contenu['Type_de_contenu'] == 'video'): ?>
-                            <div class="column is-one-quarter">
-                                <div class="box">
-                                    <article class="media">
+        <!-- Contenu des onglets -->
+        <div class="tab-content">
+            <div class="columns is-multiline">
+                <?php foreach ($contenus as $contenu): ?>
+                    <?php if ($contenu['Type_de_contenu'] == 'livre'): ?>
+                        <div class="column is-one-quarter">
+                            <div class="box">
+                                <article class="media">
                                     <div class="media-left">
-                                <?php if ($contenu['Image_contenu']): ?>
-                                    <figure class="image is-64x64">
-                                        <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
-                                    </figure>
-                                <?php endif; ?>
+                                        <?php if ($contenu['Image_contenu']): ?>
+                                            <figure class="image is-64x64">
+                                                <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
+                                            </figure>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
+                                                    <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
+                                                </a>
+                                                <br>
+                                                <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
                             </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
-                                            <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
-                                        </a>
-                                        <br>
-                                        <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
-                                    </p>
-                                </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-content is-hidden">
+            <div class="columns is-multiline">
+                <?php foreach ($contenus as $contenu): ?>
+                    <?php if ($contenu['Type_de_contenu'] == 'citation'): ?>
+                        <div class="column is-one-quarter">
+                            <div class="box">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <?php if ($contenu['Image_contenu']): ?>
+                                            <figure class="image is-64x64">
+                                                <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
+                                            </figure>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
+                                                    <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
+                                                </a>
+                                                <br>
+                                                <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
                             </div>
-                        </article>
-                    </div>
-                </div>
-                <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-content is-hidden">
+            <div class="columns is-multiline">
+                <?php foreach ($contenus as $contenu): ?>
+                    <?php if ($contenu['Type_de_contenu'] == 'article'): ?>
+                        <div class="column is-one-quarter">
+                            <div class="box">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <?php if ($contenu['Image_contenu']): ?>
+                                            <figure class="image is-64x64">
+                                                <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
+                                            </figure>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
+                                                    <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
+                                                </a>
+                                                <br>
+                                                <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-content is-hidden">
+            <div class="columns is-multiline">
+                <?php foreach ($contenus as $contenu): ?>
+                    <?php if ($contenu['Type_de_contenu'] == 'video'): ?>
+                        <div class="column is-one-quarter">
+                            <div class="box">
+                                <article class="media">
+                                    <div class="media-left">
+                                        <?php if ($contenu['Image_contenu']): ?>
+                                            <figure class="image is-64x64">
+                                                <img src="<?php echo htmlspecialchars($contenu['Image_contenu']); ?>" alt="Image">
+                                            </figure>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <a href="notes_contenu.php?id=<?php echo $contenu['ID_Contenu']; ?>">
+                                                    <strong><?php echo htmlspecialchars($contenu['Titre_Contenu']); ?></strong>
+                                                </a>
+                                                <br>
+                                                <?php echo htmlspecialchars($contenu['Description_contenu']); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -404,6 +404,8 @@ $biographies = $stmt->fetchAll();
         </div>
     </div>
 </div>
-</div>
 </body>
 </html>
+
+
+                              
